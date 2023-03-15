@@ -5,6 +5,17 @@ Implementation of Compact Transformers from [Escaping the Big Data Paradigm with
 
 Official Pytorch implementation can be found here: https://github.com/SHI-Labs/Compact-Transformers
 
+## Overview 
+Compact Convolutional Transformer (CCT) is represented by three main changes on ViT:
+- Convolutional Tokenizer
+- Sequence Pooling instead of the Class token
+- Learnable Positional Embedding instead of Sinusodial Embedding
+
+CCT naturally inherits other components of ViT, such as:
+- Multi-Head Self Attention
+- Feed Forward Network (MLP Block)
+- Dropouts and Stochastic Depth
+
 ## Usage
 ```python
 !pip install git+https://github.com/johnypark/CCT-keras
