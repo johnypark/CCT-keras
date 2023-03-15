@@ -14,7 +14,7 @@ from CCT_keras import CCT
 model = CCT(num_classes = 1000, input_shape = (224, 224, 3))
 
 ```
-Default CCT() is set as CCT_14_7x2 in the paper, for which the authors used to train on ImageNet from scratch.
+The default CCT() is set as CCT_14_7x2 in the paper, for which the authors used to train on ImageNet from scratch.
 ```
 
 model = summary()
