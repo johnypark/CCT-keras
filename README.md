@@ -16,7 +16,7 @@ model = CCT(num_classes = 100, input_shape = (224, 224, 3))
 model = summary()
 
 ```
-
+Default CCT() is set as CCT_14_7x2, which is for training on ImageNet:
 ```
                                                                                                   
  activation_27 (Activation)     (None, 196, 384)     0           ['dense_27[0][0]']               
