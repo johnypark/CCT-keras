@@ -7,8 +7,8 @@ Official Pytorch implementation can be found here: https://github.com/SHI-Labs/C
 
 ## Overview 
 Compact Convolutional Transformer (CCT) is represented by three main changes on ViT:
-- Convolutional Tokenizer
-- Sequence Pooling instead of the Class token
+- Convolutional Tokenizer, instead of the direct image patching from ViT
+- Sequence Pooling instead of the Class Token
 - Learnable Positional Embedding instead of Sinusodial Embedding
 
 CCT naturally inherits other components of ViT, such as:
