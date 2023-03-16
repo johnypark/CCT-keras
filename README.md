@@ -135,6 +135,8 @@ idx_dense = [model_weights_dict[name][0] for name in names_dense]
 
 
 # Results
+
+Results and weights are adpoted directly from the official PyTorch implementation (https://github.com/SHI-Labs/Compact-Transformers).
 Type can be read in the format `L/PxC` where `L` is the number of transformer
 layers, `P` is the patch/convolution size, and `C` (CCT only) is the number of
 convolutional layers.
@@ -148,7 +150,7 @@ convolutional layers.
             <td><b>Pretraining</b></td> 
             <td><b>Epochs</b></td> 
             <td><b>PE</b></td>
-	    <td><b>Source</b><td>
+	    <td><b>Source</b></td>
             <td><b>CIFAR-10</b></td> 
             <td><b>CIFAR-100</b></td> 
         </tr>
