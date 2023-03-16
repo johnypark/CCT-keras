@@ -44,10 +44,10 @@ class MultiHeadSelfAttention(keras.layers.Layer):
               )
         self.hidden_size = hidden_size
         self.projection_dim = hidden_size // num_heads
-        self.query_dense = keras.layers.Dense(hidden_size, name = "query")
-        self.key_dense = keras.layers.Dense(hidden_size, name = "key")
-        self.value_dense = keras.layers.Dense(hidden_size, name = "value")
-        self.combine_heads = keras.layers.Dense(hidden_size, name = "out")
+        self.query_dense = keras.layers.Dense(hidden_size, name = "dense_query")
+        self.key_dense = keras.layers.Dense(hidden_size, name = "dense_key")
+        self.value_dense = keras.layers.Dense(hidden_size, name = "dense_value")
+        self.combine_heads = keras.layers.Dense(hidden_size, name = "dense_out")
         self.Dropout = keras.layers.Dropout(rate = self.DropOut_rate)
 
     def ScaledDotProductAttention(self, query, key, value):
