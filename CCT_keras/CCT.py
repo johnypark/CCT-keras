@@ -108,7 +108,6 @@ def CCT(num_classes,
     for L in range(num_TransformerLayers):
         TFL[L+1] = Transformer_Block(mlp_ratio = mlp_ratio,
                       num_heads = num_heads,
-                      projection_dims = embedding_dim,
                       DropOut_rate = DropOut_rate,
                       stochastic_depth_rate = stochastic_depth_rate,
                       LayerNormEpsilon = settings['epsilon'],
