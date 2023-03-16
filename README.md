@@ -148,30 +148,49 @@ convolutional layers.
             <td><b>Pretraining</b></td> 
             <td><b>Epochs</b></td> 
             <td><b>PE</b></td>
+	    <td><b>Source</b><td>
             <td><b>CIFAR-10</b></td> 
             <td><b>CIFAR-100</b></td> 
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td rowspan=3>CCT-7/3x1</td>
-            <td rowspan=3>None</td>
-            <td>300</td>
-            <td>Learnable</td>
+            <td rowspan=6>CCT-7/3x1</td>
+            <td rowspan=6>None</td>
+            <td rowspan=2>300</td>
+            <td rowspan=2>Learnable</td>
+	    <td>Official Pytorch</td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_cifar10_300epochs.pth">96.53%</a></td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_cifar100_300epochs.pth">80.92%</a></td>
         </tr>
+	<tr>    
+	    <td>CCT-keras</td>
+            <td> </td>
+            <td> </td>
+        </tr>
         <tr>
-            <td>1500</td>
-            <td>Sinusoidal</td>
+            <td rowspan=2>1500</td>
+            <td rowspan=2>Sinusoidal</td>		
+	    <td>Official Pytorch</td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_sine_cifar10_1500epochs.pth">97.48%</a></td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_sine_cifar100_1500epochs.pth">82.72%</a></td>
         </tr>
+	<tr>    
+	    <td>CCT-keras</td>
+            <td> </td>
+            <td> </td>
+        </tr>
         <tr>
-            <td>5000</td>
-            <td>Sinusoidal</td>
+            <td rowspan=2>5000</td>
+            <td rowspan=2>Sinusoidal</td>			
+	    <td>Official Pytorch</td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_sine_cifar10_5000epochs.pth">98.00%</a></td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_sine_cifar100_5000epochs.pth">82.87%</a></td>
+	</tr>
+	<tr>    
+	    <td>CCT-keras</td>
+            <td> </td>
+            <td> </td>
         </tr>
     </tbody>
 </table>
