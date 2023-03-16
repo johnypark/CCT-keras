@@ -145,7 +145,6 @@ class FeedForwardNetwork(keras.layers.Layer):
 
 def Transformer_Block(mlp_ratio,
                       num_heads,
-                      projection_dims,
                       stochastic_depth_rate = None,
                       DropOut_rate = 0.1,
                       LayerNormEpsilon = 1e-6):
