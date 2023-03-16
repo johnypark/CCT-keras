@@ -134,9 +134,9 @@ idx_dense = [model_weights_dict[name][0] for name in names_dense]
 ```
 
 
-# Results
+# Results and Pre-trained Weights
 
-Results and weights are adpoted directly from the official PyTorch implementation (https://github.com/SHI-Labs/Compact-Transformers).
+Results and weights are adpoted directly from the official PyTorch implementation (https://github.com/SHI-Labs/Compact-Transformers). I plan to gradually port the PyTorch weights to Tensorflow and keep things posted here. 
 Type can be read in the format `L/PxC` where `L` is the number of transformer
 layers, `P` is the patch/convolution size, and `C` (CCT only) is the number of
 convolutional layers.
@@ -249,6 +249,7 @@ convolutional layers.
             <td><b>Epochs</b></td> 
 	    <td><b># Params</b></td> 
             <td><b>MACs</b></td>
+	    <td><b>Source</b></td>
             <td><b>Top-1 Accuracy</b></td>            
         </tr>
     </thead>
@@ -256,28 +257,39 @@ convolutional layers.
         <tr>
             <td rowspan=1><a href="https://github.com/google-research/vision_transformer/">ViT</a></td>
             <td>12/16</td>
-	        <td>384</td>
-	        <td>300</td>
+	    <td>384</td>
+	    <td>300</td>
             <td>86.8M</td>
             <td>17.6G</td>
             <td>77.91%</td>
         </tr>
         <tr>
-            <td rowspan=2>CCT</td>
-            <td>14/7x2</td>
-	        <td>224</td>
-            <td>310</td>
-            <td>22.36M</td>
-            <td>5.11G</td>
+            <td rowspan=4>CCT</td>
+            <td rowspan=2>14/7x2</td>
+	    <td rowspan=2>224</td>
+            <td rowspan=2>310</td>
+            <td rowspan=2>22.36M</td>
+            <td rowspan=2>5.11G</td>
+		<td> Offical Pytorch </td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_14_7x2_224_imagenet.pth">80.67%</a></td>
         </tr>
+	<tr>
+		<td> CCT-keras </td>
+            <td> TBD </td>
+	</tr>	
         <tr>
-            <td>14/7x2</td>
-	        <td>384</td>
-            <td>310 + 30</td>
-            <td>22.51M</td>
-            <td>15.02G</td>
+            <td rowspan=2>14/7x2</td>
+	     <td rowspan=2>384</td>
+            <td rowspan=2>310 + 30</td>
+            <td rowspan=2>22.51M</td>
+            <td rowspan=2>15.02G</td>
+		<td> Offical Pytorch </td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/finetuned/cct_14_7x2_384_imagenet.pth">82.71%</a></td>
         </tr>
+	<tr>
+		<td> CCT-keras </td>
+            <td> TBD </td>
+	</tr>	
+        
     </tbody>
 </table>
