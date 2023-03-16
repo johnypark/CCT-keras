@@ -91,6 +91,7 @@ class MultiHeadSelfAttention(keras.layers.Layer):
     def get_config(self):
         config = super().get_config()
         config.update({"num_heads": self.num_heads})
+        config.update({"DropOut_rate": self.DropOut_rate})
         return config
 
     @classmethod
@@ -99,7 +100,7 @@ class MultiHeadSelfAttention(keras.layers.Layer):
 
 # Feed Forward Network (FFN)
 
-class MlpBlock(keras.layers.Layer):
+class FeedForwardNetwork(keras.layers.Layer):
     def __init__(self, *args, mlp_ratio,
                                 DropOut_rate,
                                 activation = 'gelu',
@@ -112,18 +113,18 @@ class MlpBlock(keras.layers.Layer):
     def build(self, input_shape):
         embedding_dim = input_shape[-1]
         overhead_dim = int(embedding_dim*self.mlp_ratio)
-        self.Dense1 = keras.layers.Dense(units = overhead_dim, name = "dense_1")
-        self.Dense2 = keras.layers.Dense(units = embedding_dim, name = "dense_2")
+        self.Dense_hidden = keras.layers.Dense(units = overhead_dim, name = "dense_hidden")
+        self.Dense_out = keras.layers.Dense(units = embedding_dim, name = "dense_out")
         self.Activation = keras.layers.Activation(self.activation)
         self.Dropout = keras.layers.Dropout(rate = self.DropOut_rate)
         
     
     def call(self, inputs):
         x = inputs
-        x = self.Dense1(x)
+        x = self.Dense_hidden(x)
         x = self.Activation(x)
         x = self.Dropout(x)
-        x = self.Dense2(x)
+        x = self.Dense_out(x)
         x = self.Activation(x)
         outputs = self.Dropout(x)
         
@@ -168,7 +169,7 @@ def Transformer_Block(mlp_ratio,
         LN_output2 = tf.keras.layers.LayerNormalization(
             epsilon = LayerNormEpsilon
             )(att_output)
-        mlp = MlpBlock(mlp_ratio = mlp_ratio,
+        mlp = FeedForwardNetwork(mlp_ratio = mlp_ratio,
                       DropOut_rate = DropOut_rate 
 		    )(LN_output2)
         if stochastic_depth_rate:
