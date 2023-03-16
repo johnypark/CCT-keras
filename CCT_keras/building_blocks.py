@@ -21,7 +21,6 @@ Copyright (c) 2023 John Park
 
 import tensorflow as tf
 from tensorflow import keras
-from einops import rearrange
 from CCT_keras.utils import DropPath
 
 # MHSA layer 
