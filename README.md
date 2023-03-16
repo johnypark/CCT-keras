@@ -261,6 +261,7 @@ convolutional layers.
 	    <td>300</td>
             <td>86.8M</td>
             <td>17.6G</td>
+		<td> Offical Pytorch </td>
             <td>77.91%</td>
         </tr>
         <tr>
