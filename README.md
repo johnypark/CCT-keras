@@ -167,8 +167,8 @@ convolutional layers.
         </tr>
 	<tr>    
 	    <td>CCT-keras</td>
-            <td> </td>
-            <td> </td>
+            <td> TBD </td>
+            <td> TBD </td>
         </tr>
         <tr>
             <td rowspan=2>1500</td>
@@ -179,8 +179,8 @@ convolutional layers.
         </tr>
 	<tr>    
 	    <td>CCT-keras</td>
-            <td> </td>
-            <td> </td>
+            <td> TBD </td>
+            <td> TBD </td>
         </tr>
         <tr>
             <td rowspan=2>5000</td>
@@ -206,23 +206,35 @@ convolutional layers.
             <td><b>Pre-training</b></td>
             <td><b>PE</b></td>
             <td><b>Image Size</b></td>
+	    <td><b>Source</b></td>
             <td><b>Accuracy</b></td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>CCT-7/7x2</td>
-            <td>None</td>
-            <td>Sinusoidal</td>
-            <td>224x224</td>
+            <td rowspan=2>CCT-7/7x2</td>
+            <td rowspan=2>None</td>
+            <td rowspan=2>Sinusoidal</td>
+            <td rowspan=2>224x224</td>
+	    <td>Official Pytorch</td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_7x2_224_flowers102.pth">97.19%</a></td>
+        </tr>	    
+	<tr>    
+	    <td>CCT-keras</td>
+            <td> TBD</td>
         </tr>
         <tr>
-            <td>CCT-14/7x2</td>
-            <td>ImageNet-1k</td>
-            <td>Learnable</td>
-            <td>384x384</td>
+            <td rowspan=2>CCT-14/7x2</td>
+            <td rowspan=2>ImageNet-1k</td>
+            <td rowspan=2>Learnable</td>
+            <td rowspan=2>384x384</td>
+	    <td>Official Pytorch</td>
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/finetuned/cct_14_7x2_384_flowers102.pth">99.76%</a></td>
+	<tr>    
+	    <td>CCT-keras</td>
+            <td> </td>
+            <td> </td>
+        </tr>
         </tr>
     </tbody>
 </table>
