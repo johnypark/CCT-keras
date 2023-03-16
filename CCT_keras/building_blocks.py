@@ -100,25 +100,47 @@ class MultiHeadSelfAttention(keras.layers.Layer):
 
 # Feed Forward Network (FFN)
 
-def MLP_block(embedding_dim,
-              mlp_ratio,
-              DropOut_rate,
-              activation = 'gelu',
-              name = None):
+class MlpBlock(keras.layers.Layer):
+    def __init__(self, *args, mlp_ratio,
+                                DropOut_rate,
+                                activation = 'gelu',
+                                **kwargs):
+        super().__init__(*args, **kwargs)
+        self.mlp_ratio = mlp_ratio
+        self.DropOut_rate = DropOut_rate
+        self.activation = activation
     
-    def apply(inputs):
-        x = inputs
-        x = keras.layers.Dense(units = int(embedding_dim*mlp_ratio))(x)
-        x = keras.layers.Activation(activation)(x)
-        x = keras.layers.Dropout(rate = DropOut_rate)(x)
-        x = keras.layers.Dense(units = embedding_dim)(x)
-        x = keras.layers.Activation(activation)(x)
-        x = keras.layers.Dropout(rate = DropOut_rate)(x)
+    def build(self, input_shape):
+        embedding_dim = input_shape[-1]
+        overhead_dim = int(embedding_dim*self.mlp_ratio)
+        self.Dense1 = keras.layers.Dense(units = overhead_dim, name = "dense_1")
+        self.Dense2 = keras.layers.Dense(units = embedding_dim, name = "dense_2")
+        self.Activation = keras.layers.Activation(self.activation)
+        self.Dropout = keras.layers.Dropout(rate = self.DropOut_rate)
         
-        return x 
     
-    return apply
+    def call(self, inputs):
+        x = inputs
+        x = self.Dense1(x)
+        x = self.Activation(x)
+        x = self.Dropout(x)
+        x = self.Dense2(x)
+        x = self.Activation(x)
+        outputs = self.Dropout(x)
+        
+        return outputs
+    
+    
+    def get_config(self):
+        config = super().get_config()
+        config.update({"mlp_ratio": self.mlp_ratio})
+        config.update({"mlp_ratio": self.DropOut_ratio})
+        return config
 
+    @classmethod
+    def from_config(cls, config):
+        return cls(**config)
+    
 # Transformer Block
 
 def Transformer_Block(mlp_ratio,
@@ -147,8 +169,7 @@ def Transformer_Block(mlp_ratio,
         LN_output2 = tf.keras.layers.LayerNormalization(
             epsilon = LayerNormEpsilon
             )(att_output)
-        mlp = MLP_block(embedding_dim = projection_dims,
-                            mlp_ratio = mlp_ratio,
+        mlp = MlpBlock(mlp_ratio = mlp_ratio,
                       DropOut_rate = DropOut_rate 
 		    )(LN_output2)
         if stochastic_depth_rate:
