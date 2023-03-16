@@ -1,0 +1,9 @@
+source: https://arxiv.org/abs/2104.05704
+Model_name: CCT_4
+num_TransformerLayers: 4
+num_heads: 2
+mlp_ratio: 1
+embedding_dim: 128
+
+
+

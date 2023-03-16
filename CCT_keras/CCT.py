@@ -133,11 +133,32 @@ def CCT(num_classes,
     
     return tf.keras.Model(inputs = input, outputs = outputs)
 
-def CCT_7_3x1_32(inputs):
+
+def CCT_4(inputs):
     outputs = inputs
     return tf.keras.Model(inputs = input, outputs = outputs)
 
-def CCT_7_3x2_32(inputs):
+def CCT_7(inputs):
+    outputs = inputs
+    return tf.keras.Model(inputs = input, outputs = outputs)
+
+def CCT_7_3x1(inputs):
+    outputs = inputs
+    return tf.keras.Model(inputs = input, outputs = outputs)
+
+def CCT_7_3x1_32_C100(inputs):
+    outputs = inputs
+    return tf.keras.Model(inputs = input, outputs = outputs)
+
+def CCT_7_3x1_32_sine_c100(inputs):
+    outputs = inputs
+    return tf.keras.Model(inputs = input, outputs = outputs)
+
+def CCT_7_7x2_224_sine(inputs):
+    outputs = inputs
+    return tf.keras.Model(inputs = input, outputs = outputs)
+
+def CCT_14(inputs):
     outputs = inputs
     return tf.keras.Model(inputs = input, outputs = outputs)
 
@@ -152,4 +173,3 @@ def CCT_14_7x2_224(inputs):
 def CCT_14_7x2_384(inputs):
     outputs = inputs
     return tf.keras.Model(inputs = input, outputs = outputs)
-
