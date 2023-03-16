@@ -191,8 +191,8 @@ convolutional layers.
 	</tr>
 	<tr>    
 	    <td>CCT-keras</td>
-            <td> </td>
-            <td> </td>
+            <td> TBD</td>
+            <td> TBD</td>
         </tr>
     </tbody>
 </table>
@@ -232,8 +232,7 @@ convolutional layers.
             <td><a href="https://shi-labs.com/projects/cct/checkpoints/finetuned/cct_14_7x2_384_flowers102.pth">99.76%</a></td>
 	<tr>    
 	    <td>CCT-keras</td>
-            <td> </td>
-            <td> </td>
+            <td> TBD</td>
         </tr>
         </tr>
     </tbody>
