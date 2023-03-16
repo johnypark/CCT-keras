@@ -134,7 +134,7 @@ class MlpBlock(keras.layers.Layer):
     def get_config(self):
         config = super().get_config()
         config.update({"mlp_ratio": self.mlp_ratio})
-        config.update({"mlp_ratio": self.DropOut_ratio})
+        config.update({"DropOut_rate": self.DropOut_rate})
         return config
 
     @classmethod
