@@ -132,3 +132,120 @@ idx_dense = [model_weights_dict[name][0] for name in names_dense]
  'layer_normalization_2/beta:0': (19, tf.float32, TensorShape([384])),
 
 ```
+
+
+# Results
+Type can be read in the format `L/PxC` where `L` is the number of transformer
+layers, `P` is the patch/convolution size, and `C` (CCT only) is the number of
+convolutional layers.
+
+## CIFAR-10 and CIFAR-100
+
+<table style="width:100%">
+    <thead>
+        <tr>
+            <td><b>Model</b></td>
+            <td><b>Pretraining</b></td> 
+            <td><b>Epochs</b></td> 
+            <td><b>PE</b></td>
+            <td><b>CIFAR-10</b></td> 
+            <td><b>CIFAR-100</b></td> 
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan=3>CCT-7/3x1</td>
+            <td rowspan=3>None</td>
+            <td>300</td>
+            <td>Learnable</td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_cifar10_300epochs.pth">96.53%</a></td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_cifar100_300epochs.pth">80.92%</a></td>
+        </tr>
+        <tr>
+            <td>1500</td>
+            <td>Sinusoidal</td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_sine_cifar10_1500epochs.pth">97.48%</a></td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_sine_cifar100_1500epochs.pth">82.72%</a></td>
+        </tr>
+        <tr>
+            <td>5000</td>
+            <td>Sinusoidal</td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_sine_cifar10_5000epochs.pth">98.00%</a></td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_3x1_32_sine_cifar100_5000epochs.pth">82.87%</a></td>
+        </tr>
+    </tbody>
+</table>
+
+## Flowers-102
+
+<table style="width:100%">
+    <thead>
+        <tr>
+            <td><b>Model</b></td>
+            <td><b>Pre-training</b></td>
+            <td><b>PE</b></td>
+            <td><b>Image Size</b></td>
+            <td><b>Accuracy</b></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>CCT-7/7x2</td>
+            <td>None</td>
+            <td>Sinusoidal</td>
+            <td>224x224</td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_7_7x2_224_flowers102.pth">97.19%</a></td>
+        </tr>
+        <tr>
+            <td>CCT-14/7x2</td>
+            <td>ImageNet-1k</td>
+            <td>Learnable</td>
+            <td>384x384</td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/finetuned/cct_14_7x2_384_flowers102.pth">99.76%</a></td>
+        </tr>
+    </tbody>
+</table>
+
+## ImageNet
+
+<table style="width:100%">
+    <thead>
+        <tr>
+            <td><b>Model</b></td> 
+            <td><b>Type</b></td> 
+            <td><b>Resolution</b></td> 
+            <td><b>Epochs</b></td> 
+            <td><b>Top-1 Accuracy</b></td>
+            <td><b># Params</b></td> 
+            <td><b>MACs</b></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan=1><a href="https://github.com/google-research/vision_transformer/">ViT</a></td>
+            <td>12/16</td>
+	        <td>384</td>
+	        <td>300</td>
+            <td>77.91%</td>
+            <td>86.8M</td>
+            <td>17.6G</td>
+        </tr>
+        <tr>
+            <td rowspan=2>CCT</td>
+            <td>14/7x2</td>
+	        <td>224</td>
+            <td>310</td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/pretrained/cct_14_7x2_224_imagenet.pth">80.67%</a></td>
+            <td>22.36M</td>
+            <td>5.11G</td>
+        </tr>
+        <tr>
+            <td>14/7x2</td>
+	        <td>384</td>
+            <td>310 + 30</td>
+            <td><a href="https://shi-labs.com/projects/cct/checkpoints/finetuned/cct_14_7x2_384_imagenet.pth">82.71%</a></td>
+            <td>22.51M</td>
+            <td>15.02G</td>
+        </tr>
+    </tbody>
+</table>
