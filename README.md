@@ -94,7 +94,8 @@ model_weights_dict = {(w.name): (idx, w.dtype, w.shape) for idx, w in enumerate(
 names_dense = [name for name in model_weights_dict.keys() if 'dense' in name]
 idx_dense = [model_weights_dict[name][0] for name in names_dense]
 
->>
+
+>>model_weights_dict
 {'conv2d/kernel:0': (0, tf.float32, TensorShape([3, 3, 3, 98])),
  'conv2d_1/kernel:0': (1, tf.float32, TensorShape([3, 3, 98, 196])),
  'layer_normalization/gamma:0': (2, tf.float32, TensorShape([196])),
