@@ -32,51 +32,42 @@ model = summary()
 .
 .
 .
-layer_normalization_55 (LayerN  (None, 196, 384)    768         ['add_53[0][0]']                 
+ layer_normalization_26 (LayerN  (None, 196, 384)    768         ['add_25[0][0]']                 
  ormalization)                                                                                    
                                                                                                   
- multi_head_self_attention_27 (  (None, None, 384)   591360      ['layer_normalization_55[0][0]'] 
+ multi_head_self_attention_13 (  (None, None, 384)   591360      ['layer_normalization_26[0][0]'] 
  MultiHeadSelfAttention)                                                                          
                                                                                                   
- drop_path_54 (DropPath)        (None, None, 384)    0           ['multi_head_self_attention_27[0]
+ drop_path_26 (DropPath)        (None, None, 384)    0           ['multi_head_self_attention_13[0]
                                                                  [0]']                            
                                                                                                   
- add_54 (Add)                   (None, 196, 384)     0           ['add_53[0][0]',                 
-                                                                  'drop_path_54[0][0]']           
+ add_26 (Add)                   (None, 196, 384)     0           ['add_25[0][0]',                 
+                                                                  'drop_path_26[0][0]']           
                                                                                                   
- layer_normalization_56 (LayerN  (None, 196, 384)    768         ['add_54[0][0]']                 
+ layer_normalization_27 (LayerN  (None, 196, 384)    768         ['add_26[0][0]']                 
  ormalization)                                                                                    
                                                                                                   
- dense_56 (Dense)               (None, 196, 1152)    443520      ['layer_normalization_56[0][0]'] 
+ feed_forward_network_13 (FeedF  (None, 196, 384)    886272      ['layer_normalization_27[0][0]'] 
+ orwardNetwork)                                                                                   
                                                                                                   
- activation_54 (Activation)     (None, 196, 1152)    0           ['dense_56[0][0]']               
+ drop_path_27 (DropPath)        (None, 196, 384)     0           ['feed_forward_network_13[0][0]']
                                                                                                   
- dropout_57 (Dropout)           (None, 196, 1152)    0           ['activation_54[0][0]']          
+ add_27 (Add)                   (None, 196, 384)     0           ['add_26[0][0]',                 
+                                                                  'drop_path_27[0][0]']           
                                                                                                   
- dense_57 (Dense)               (None, 196, 384)     442752      ['dropout_57[0][0]']             
-                                                                                                  
- activation_55 (Activation)     (None, 196, 384)     0           ['dense_57[0][0]']               
-                                                                                                  
- dropout_58 (Dropout)           (None, 196, 384)     0           ['activation_55[0][0]']          
-                                                                                                  
- drop_path_55 (DropPath)        (None, 196, 384)     0           ['dropout_58[0][0]']             
-                                                                                                  
- add_55 (Add)                   (None, 196, 384)     0           ['add_54[0][0]',                 
-                                                                  'drop_path_55[0][0]']           
-                                                                                                  
- layer_normalization_57 (LayerN  (None, 196, 384)    768         ['add_55[0][0]']                 
+ layer_normalization_28 (LayerN  (None, 196, 384)    768         ['add_27[0][0]']                 
  ormalization)                                                                                    
                                                                                                   
- dense_58 (Dense)               (None, 196, 1)       385         ['layer_normalization_57[0][0]'] 
+ dense (Dense)                  (None, 196, 1)       385         ['layer_normalization_28[0][0]'] 
                                                                                                   
- tf.linalg.matmul_1 (TFOpLambda  (None, 1, 384)      0           ['dense_58[0][0]',               
- )                                                                'layer_normalization_57[0][0]'] 
+ tf.linalg.matmul (TFOpLambda)  (None, 1, 384)       0           ['dense[0][0]',                  
+                                                                  'layer_normalization_28[0][0]'] 
                                                                                                   
- flatten_1 (Flatten)            (None, 384)          0           ['tf.linalg.matmul_1[0][0]']     
+ flatten (Flatten)              (None, 384)          0           ['tf.linalg.matmul[0][0]']       
                                                                                                   
- dropout_59 (Dropout)           (None, 384)          0           ['flatten_1[0][0]']              
+ dropout_1 (Dropout)            (None, 384)          0           ['flatten[0][0]']                
                                                                                                   
- dense_59 (Dense)               (None, 1000)         385000      ['dropout_59[0][0]']             
+ dense_1 (Dense)                (None, 1000)         385000      ['dropout_1[0][0]']              
                                                                                                   
 ==================================================================================================
 Total params: 24,735,401
