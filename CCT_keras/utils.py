@@ -4,6 +4,14 @@ import tensorflow as tf
 from tensorflow import keras 
 
 class DropPath(keras.layers.Layer):
+    """ DropPath class which adopted ideas from the Pytorch DropPath 
+    https://huggingface.co/spaces/Roll20/pet_score/blame/main/lib/timm/models/layers/drop.py
+    Tested generating mask with from a bernoulli distribution, which turns out to 
+    disrupt training for some unknown reason.
+    This version of the DropPath layer wraps around utilizes keras.layers.Dropout directly and works well.
+    Args:
+        rate (_type_): the rate at which DropPath  
+    """
     def __init__(self, rate, **kwargs):
         super(DropPath, self).__init__(**kwargs)
         self.rate = rate
@@ -14,6 +22,8 @@ class DropPath(keras.layers.Layer):
         self.StochasticDrop = keras.layers.Dropout(self.rate, noise_shape = shape)
         
     def call(self, inputs, training = None):
+        if self.rate == 0:
+            return inputs    
         return self.StochasticDrop(inputs)
     
     def compute_output_shape(self, input_shape):
