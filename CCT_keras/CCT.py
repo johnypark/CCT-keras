@@ -67,8 +67,7 @@ def CCT(num_classes,
         stochastic_depth_rate = 0.1,
         settings = settings,
         n_SeqPool_weights = 1,
-        positional_embedding = True,
-        embedding_type = 'learnable',
+        positional_embedding = 'learnable',
         add_top = True,
         final_DropOut_rate = 0.3):
 
@@ -84,22 +83,19 @@ def CCT(num_classes,
 		shape = input_shape)
     
     x = input
+    
+    ### Tokenize Image
     x = Conv_Tokenizer(strides = tokenizer_strides, 
               kernel_size = tokenizer_kernel_size,
-              #kernel_initializer = settings['conv2DInitializer'],
+              kernel_initializer = settings['conv2DInitializer'],
               activation = 'relu',
               pool_size = 3,
               pooling_stride = 2,
               list_embedding_dims = Tokenizer_ConvLayers_dims)(x)
     
+    ### Add Positional Embedding
     if positional_embedding:
-        edge_length = get_dim_Conv_Tokenizer(Conv_strides = tokenizer_strides, 
-                                             pool_strides = 2, 
-                                             num_tokenizer_ConvLayers = num_tokenizer_ConvLayers)(input_shape[0])
-        num_patches = edge_length**2
-        x = add_positional_embedding(num_patches = num_patches, 
-                               embedding_dim = embedding_dim,
-                               embedding_type = embedding_type)(x)    
+        x = add_positional_embedding(embedding_type = positional_embedding)(x)    
     x = tf.keras.layers.Dropout(rate = DropOut_rate)(x)
     
     ### Transformer Blocks

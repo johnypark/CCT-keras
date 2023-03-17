@@ -20,10 +20,11 @@ class DropPath(keras.layers.Layer):
         num_shapes = len(input_shape)
         shape = (None,)+(1,)*(num_shapes-1)
         self.StochasticDrop = keras.layers.Dropout(self.rate, noise_shape = shape)
+        self.Identity = keras.layers.Identity(trainable=False, dynamic=False)
         
     def call(self, inputs, training = None):
         if self.rate == 0:
-            return inputs    
+            return self.Identity(inputs)    
         return self.StochasticDrop(inputs)
     
     def compute_output_shape(self, input_shape):

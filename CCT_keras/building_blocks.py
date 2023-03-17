@@ -1,27 +1,7 @@
-__copyright__ = """
-Building Blocks CCT-keras
-Copyright (c) 2023 John Park
-"""
-### style adapted from TensorFlow authors
-
-# Copyright 2015 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-
 import tensorflow as tf
 from tensorflow import keras
 from CCT_keras.utils import DropPath
+from functools import partial
 
 # MHSA layer 
 # Adopted from: https://github.com/faustomorales/vit-keras/blob/master/vit_keras/utils.py
@@ -46,19 +26,20 @@ class MultiHeadSelfAttention(keras.layers.Layer):
         self.query_dense = keras.layers.Dense(hidden_size, name = "dense_query")
         self.key_dense = keras.layers.Dense(hidden_size, name = "dense_key")
         self.value_dense = keras.layers.Dense(hidden_size, name = "dense_value")
-        self.combine_heads = keras.layers.Dense(hidden_size, name = "dense_out")
+        self.out_dense = keras.layers.Dense(hidden_size, name = "dense_out")
         self.Dropout = keras.layers.Dropout(rate = self.DropOut_rate)
+        self.CalcAttention = partial(self.ScaledDotProductAttention, dim  = self.projection_dim)
 
-    def ScaledDotProductAttention(self, query, key, value):
+    def ScaledDotProductAttention(self, query, key, value, dim):
         score = tf.matmul(query, key, transpose_b = True)
-        dim_key = tf.cast(tf.shape(key)[-1], dtype = score.dtype)
-        scaled_score = score / tf.math.sqrt(dim_key)
+        #dim_key = tf.cast(tf.shape(key)[-1], dtype = score.dtype)
+        scaled_score = score / tf.math.sqrt(dim)
         weights = tf.nn.softmax(scaled_score, axis = -1)
         weights = self.Dropout(weights)
         output = tf.matmul(weights, value)
         return output, weights
 
-    def separate_heads(self, x, batch_size):
+    def separate_to_multihead(self, x, batch_size):
         x = tf.reshape(
                       tensor = x, 
                       shape = (batch_size, -1, self.num_heads, self.projection_dim)
@@ -71,17 +52,15 @@ class MultiHeadSelfAttention(keras.layers.Layer):
         query = self.query_dense(inputs)
         key = self.key_dense(inputs)
         value = self.value_dense(inputs)
-
-        query = self.separate_heads(query, batch_size)
-        key = self.separate_heads(key, batch_size)
-        value = self.separate_heads(value, batch_size)
         
-        weighted_value, weights = self.ScaledDotProductAttention(query, key, value)
+        query, key, value = [self.separate_to_multihead(tensor, batch_size) for tensor in [query, key, value]]
+        
+        weighted_value, weights = self.CalcAttention(query, key, value)
         weighted_value = tf.transpose(weighted_value, perm = [0, 2, 1, 3])
-        multihead_values = tf.reshape(weighted_value, 
+        combined_values = tf.reshape(weighted_value, 
                                       shape = (batch_size, -1, self.hidden_size)
                                       )
-        output = self.combine_heads(multihead_values)
+        output = self.out_dense(combined_values)
         output = self.Dropout(output)
         
         if self.output_weight:
@@ -208,28 +187,48 @@ def sinusodial_embedding(num_patches, embedding_dim):
 
         return embed
 
-class add_positional_embedding():
+class add_positional_embedding(keras.layers.Layer):
     
     def __init__(self, 
                  num_patches, 
                  embedding_dim,
-                 embedding_type = 'sinusodial'):
+                 embedding_type = 'learnable',
+                 noise_stddev = 2e-1):
         
         self.embedding_type = embedding_type
-        self.num_patches = num_patches
-        self.embedding_dim = embedding_dim
-        if embedding_type:
-            if embedding_type == 'sinusodial':
-                self.positional_embedding = tf.Variable(sinusodial_embedding(num_patches = self.num_patches,
-                                              embedding_dim = self.embedding_dim
-                                              ),
-                    trainable = False)
-            elif embedding_type == 'learnable':
-                self.positional_embedding = tf.Variable(tf.random.truncated_normal(shape=[1, self.num_patches, self.embedding_dim], stddev=0.2))
-            
-        else:
-            self.positional_embedding = None
+        self.num_patches = num_patches # this can be removed
+        self.embedding_dim = embedding_dim # this can be removed
+        self.noise_stddev = noise_stddev
         
-    def __call__(self, input):
-        input = tf.math.add(input, self.positional_embedding)
+    def build(self, input_shape):
+        assert (
+            len(input_shape)==3 
+        ), "Expected tensor dim=3. Got {}".format(len(input_shape))
+            
+        num_patches = input_shape[-2]
+        embedding_dim = input_shape[-1]
+        if self.embedding_type:
+            if self.embedding_type == 'sinusodial':
+                self.positional_embedding = tf.Variable(sinusodial_embedding(num_patches = num_patches,
+                                                embedding_dim = embedding_dim,
+                                                name ='sinosodial'
+                                                ),
+                        trainable = False)
+            elif self.embedding_type == 'learnable':
+                    self.positional_embedding = tf.Variable(
+                        tf.random.truncated_normal(shape=[1, num_patches, embedding_dim], stddev= self.noise_stddev),
+                        trainable = True,
+                        name = 'learnable')
+                
+        else: # else simple gaussian noise injection
+                
+            noise = tf.random_normal_initializer(stddev = self.noise_stddev) 
+            self.positional_embedding = tf.Variable(
+                    noise(shape = [1, num_patches, embedding_dim]),
+                    trainable = False,
+                    name = 'gaussian_noise')
+            
+    def call(self, input):
+        PE = tf.cast(self.positional_embedding, dtype = input.dtype)
+        input = tf.math.add(input, PE)
         return input
