@@ -252,7 +252,7 @@ class add_positional_embedding(keras.layers.Layer):
         if self.embedding_type:
             if self.embedding_type == 'sinusodial':
                 self.positional_embedding = tf.Variable(sinusodial_embedding(num_patches = num_patches,
-                                                embedding_dim = embedding_dim,
+                                                embedding_dim = embedding_dim),
                                                 name ='sinosodial'
                                                 ),
                         trainable = False)
