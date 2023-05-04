@@ -157,6 +157,47 @@ def Transformer_Block(mlp_ratio,
         return output
     
     return apply
+
+
+def MB4D_Block(mlp_ratio,
+               embedding_dims,
+                      stochastic_depth_rate = None,
+                      DropOut_rate = 0.1,
+                      activation = 'gelu'):
+    def apply(inputs):
+        
+        x = inputs
+        #poolformer layer
+        pooling = tf.keras.layers.AveragePooling2D(pool_size =3, 
+                                                   strides = 2)(x)
+        pooling_output = tf.keras.layers.Add()([inputs, pooling])
+        
+        #MLP substitude
+        x1 = pooling_output
+        x1 = keras.layers.Conv2D(
+            activation = None,
+            filters = embedding_dims*mlp_ratio,
+            kernel_size = 1,
+            strides = 1,
+            padding = 'same')(x1)
+        x1 = keras.layers.BatchNoramlization()(x1)
+        x1 = keras.layers.Dropout(DropOut_rate)(x1)
+        x1 = keras.layers.Activation(activation)(x1)
+        x1 = keras.layers.Conv2D(
+            activation = None,
+            filters = embedding_dims,
+            kernel_size = 1,
+            strides = 1,
+            padding = 'same')(x1)
+        x1 = keras.layers.BatchNoramlization()(x1)
+        x1 = keras.layers.Dropout(DropOut_rate)(x1)
+        if stochastic_depth_rate:
+            x1 = DropPath(stochastic_depth_rate)(x1)
+        
+        output = tf.keras.layers.Add()([pooling_output, x1])     
+        return output
+    
+    return apply
     
 # Positional embedding
 

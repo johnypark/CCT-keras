@@ -5,6 +5,8 @@ Implementation of Compact Transformers from [Escaping the Big Data Paradigm with
 
 The official Pytorch implementation can be found here: https://github.com/SHI-Labs/Compact-Transformers
 
+![Shi_Labs_Comparison](images/Shi_Labs_comparison.png)
+
 ## Overview 
 Compact Convolutional Transformer (CCT) is represented by three main changes on ViT:
 - Convolutional Tokenizer, instead of the direct image patching of ViT
