@@ -93,7 +93,7 @@ def Conv_TokenizerV2(
             kernel_size = 1,
             strides = 1,
             padding = 'same')(x1)
-        x1 = keras.layers.BatchNoramlization()(x1)
+        x1 = keras.layers.BatchNormalization()(x1)
         x1 = keras.layers.Dropout(DropOut_rate)(x1)
         x1 = keras.layers.Activation(activation)(x1)
         x1 = keras.layers.Conv2D(
@@ -102,7 +102,7 @@ def Conv_TokenizerV2(
             kernel_size = 1,
             strides = 1,
             padding = 'same')(x1)
-        x1 = keras.layers.BatchNoramlization()(x1)
+        x1 = keras.layers.BatchNormalization()(x1)
         x1 = keras.layers.Dropout(DropOut_rate)(x1)
         if stochastic_depth_rate:
             x1 = DropPath(stochastic_depth_rate)(x1)
