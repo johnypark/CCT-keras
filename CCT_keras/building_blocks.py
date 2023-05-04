@@ -235,6 +235,7 @@ class add_positional_embedding(keras.layers.Layer):
                  #embedding_dim,
                  embedding_type = 'learnable',
                  noise_stddev = 2e-1):
+        super().__init__()
         
         self.embedding_type = embedding_type
         #self.num_patches = num_patches # this can be removed
