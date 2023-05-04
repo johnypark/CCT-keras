@@ -231,14 +231,14 @@ def sinusodial_embedding(num_patches, embedding_dim):
 class add_positional_embedding(keras.layers.Layer):
     
     def __init__(self, 
-                 num_patches, 
-                 embedding_dim,
+                 #num_patches, 
+                 #embedding_dim,
                  embedding_type = 'learnable',
                  noise_stddev = 2e-1):
         
         self.embedding_type = embedding_type
-        self.num_patches = num_patches # this can be removed
-        self.embedding_dim = embedding_dim # this can be removed
+        #self.num_patches = num_patches # this can be removed
+        #self.embedding_dim = embedding_dim # this can be removed
         self.noise_stddev = noise_stddev
         
     def build(self, input_shape):
