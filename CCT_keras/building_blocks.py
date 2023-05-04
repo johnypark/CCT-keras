@@ -253,9 +253,9 @@ class add_positional_embedding(keras.layers.Layer):
             if self.embedding_type == 'sinusodial':
                 self.positional_embedding = tf.Variable(sinusodial_embedding(num_patches = num_patches,
                                                 embedding_dim = embedding_dim),
-                                                name ='sinosodial'
-                                                ),
-                        trainable = False)
+                                                name ='sinosodial', 
+                                                trainable = False)
+                       
             elif self.embedding_type == 'learnable':
                     self.positional_embedding = tf.Variable(
                         tf.random.truncated_normal(shape=[1, num_patches, embedding_dim], stddev= self.noise_stddev),
